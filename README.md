@@ -25,3 +25,7 @@
 - Bạch Gia Huy - 21127615
 - Nguyễn Thành Đạt - 21127241
 - Hùynh Hữu Lộc - 21127640
+
+## Technology in use
+- Server ExpressJS(Socket.IO)
+- Client ReactJS
