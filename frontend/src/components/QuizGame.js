@@ -24,7 +24,7 @@ export default function QuizGame() {
     const [answers, setAnswers] = useState([]);
     const [questions,setListQuestions]=useState(fetchQuestions)    
   useEffect(() => {
-    const questions= localStorage.getItem()
+    // const questions= localStorage.getItem(dsa)
     const savedQuestionIndex = localStorage.getItem('currentQuestion');
     const savedScore = localStorage.getItem('score');
     const savedAnswers = localStorage.getItem('answers');
