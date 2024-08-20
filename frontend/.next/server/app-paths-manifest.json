@@ -1,6 +1,1 @@
-{
-  "/quiz/page": "app/quiz/page.js",
-  "/memory/page": "app/memory/page.js",
-  "/caro/page": "app/caro/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js"
-}
+{}
