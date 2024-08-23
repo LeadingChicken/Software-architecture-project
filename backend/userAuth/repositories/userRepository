@@ -1,0 +1,14 @@
+const User = require('../models/Users');
+
+class UserReposistory {
+    async createUser(userData) {
+        const newUser = new User(userData);
+        return await newUser.save();
+    }
+    
+    async findByUserName(userName) {
+        return await User.findOne({ userName });
+    }
+}
+
+module.exports = new UserReposistory();
