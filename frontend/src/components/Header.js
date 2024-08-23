@@ -8,6 +8,7 @@ const Header=()=>{
                     <li><Link href="/caro">Tic-Tac-Toe</Link></li>
                     <li><Link href="/memory">Memory Game</Link></li>
                     <li><Link href="/quiz">Quiz Game</Link></li>
+                    <li><Link href="/chat">Chat</Link></li>
                 </ul>
             </nav>
         </header>
