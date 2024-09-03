@@ -14,8 +14,11 @@ export default function Chat() {
 
   useEffect(() => {
     if (!socket) {
-      socket = io('http://localhost:4000');  // Kết nối tới backend server
+      socket = io('http://localhost:4000');
     }
+
+    // Yêu cầu tin nhắn trước đó từ server khi kết nối
+    socket.emit('getPreviousMessages');
 
     socket.on('message', (msg) => {
       setMessages((prevMessages) => [...prevMessages, msg]);
@@ -58,6 +61,12 @@ export default function Chat() {
     return `${hours}:${strMinutes} ${ampm}`;
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
+  };
+
   return (
     <div>
       <h1>Realtime Chat</h1>
@@ -76,6 +85,7 @@ export default function Chat() {
           placeholder="Type your message"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={handleKeyPress}
         />
         <button onClick={sendMessage}>Send</button>
       </div>
