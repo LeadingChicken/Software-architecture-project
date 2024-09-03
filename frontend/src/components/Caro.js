@@ -100,7 +100,6 @@ const TicTacToe = () => {
 
   return (
     <div>
-      <h2>Tic-Tac-Toe</h2>
       <div style={boardStyle}>
         {Array.from({ length: 9 }).map((_, index) => renderSquare(index))}
       </div>
