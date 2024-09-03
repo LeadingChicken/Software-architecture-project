@@ -6,7 +6,7 @@ const Header = () => {
     return (
         <header>
             <Navbar bg="dark" variant="dark" expand="lg">
-                <Navbar.Brand href="/">Game Hub</Navbar.Brand>
+                <Navbar.Brand ><Nav.Link as={Link} href="/">Game Hub</Nav.Link></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">

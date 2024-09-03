@@ -28,23 +28,32 @@ const { instanceConnect: redisClient } = getRedis();
 io.on('connection', async(socket) => {
   console.log('A user connected');
 
-  socket.on('message', async (msg) => {
-    // Gửi tin nhắn cho tất cả người dùng
-    io.emit('message', msg);
-    
-    // Lưu tin nhắn vào Redis
-    await redisClient.lPush('messages', JSON.stringify(msg));
+  // Xử lý yêu cầu lấy lại tin nhắn cũ
+  socket.on('getPreviousMessages', async () => {
+    try {
+      const messages = await redisClient.lRange('messages', 0, -1);
+      if (messages) {
+        const parsedMessages = messages.map(msg => JSON.parse(msg)).reverse();
+        socket.emit('previousMessages', parsedMessages);
+      }
+    } catch (err) {
+      console.error('Error fetching previous messages:', err);
+    }
   });
 
-  try {
-    const messages = await redisClient.lRange('messages', 0, -1);
-    if (messages) {
-      const parsedMessages = messages.map(msg => JSON.parse(msg)).reverse();
-      socket.emit('previousMessages', parsedMessages);
+  // Xử lý tin nhắn mới từ client
+  socket.on('message', async (msg) => {
+    try {
+      // Gửi tin nhắn cho tất cả người dùng
+      io.emit('message', msg);
+
+      // Lưu tin nhắn vào Redis và chỉ giữ lại 100 tin nhắn gần nhất
+      await redisClient.lPush('messages', JSON.stringify(msg));
+      await redisClient.lTrim('messages', 0, 99);
+    } catch (err) {
+      console.error('Error saving message:', err);
     }
-  } catch (err) {
-    console.error('Error fetching previous messages:', err);
-  }
+  });
 
   socket.on('disconnect', () => {
     console.log('A user disconnected');
