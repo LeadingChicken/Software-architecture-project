@@ -23,8 +23,12 @@ const Header = () => {
                         {
                             isMdAndDown && 
                             <>
-                                <Nav.Link as={Link} href="/sign-in">Sign in</Nav.Link>
-                                <Nav.Link as={Link} href="/sign-up">Sign up</Nav.Link>
+                                <Nav.Link as={Link} href="/authenticate/login">
+                                  Sign In
+                                </Nav.Link>
+                                <Nav.Link as={Link} href="/authenticate/signup">
+                                  Sign Up
+                                </Nav.Link>
                             </>
                         }
                         
