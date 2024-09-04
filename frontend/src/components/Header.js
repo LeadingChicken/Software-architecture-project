@@ -9,7 +9,7 @@ import { useMediaQuery } from 'react-responsive';
 const Header = () => {
     const isMdAndDown = useMediaQuery({ maxWidth: 991 });
     return (
-        <header>
+        <>
             <Navbar bg="dark" variant="dark" expand="lg" className='px-4'>
                 <Navbar.Brand ><Nav.Link as={Link} href="/">Game Hub</Nav.Link></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -54,7 +54,7 @@ const Header = () => {
                     }
                 </Navbar.Collapse>
             </Navbar>
-        </header>
+        </>
     );
 }
 
