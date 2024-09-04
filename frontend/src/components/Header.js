@@ -38,13 +38,13 @@ const Header = () => {
                             >
                                 <NavDropdown.Item href="/sign-in">Sign in</NavDropdown.Item>
                                 <NavDropdown.Item href="/sign-up">
-                                    Sign up
+                                Sign up
                                 </NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                                {/* <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item href="#action/3.4">
                                     Separated link
-                                </NavDropdown.Item>
+                                </NavDropdown.Item> */}
                             </NavDropdown>
                         </Nav>
                     }

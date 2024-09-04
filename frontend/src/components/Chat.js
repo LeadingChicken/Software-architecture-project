@@ -2,7 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
-
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+import ListGroup from 'react-bootstrap/ListGroup'
+import Card from 'react-bootstrap/Card';
 let socket;
 
 export default function Chat() {
@@ -36,7 +40,7 @@ export default function Chat() {
 
   const sendMessage = () => {
     if (message.trim() === '') {
-      alert('Please enter a message.');
+      // alert('Please enter a message.');
       return;
     }
 
@@ -68,27 +72,36 @@ export default function Chat() {
   };
 
   return (
-    <div>
-      <h1>Realtime Chat</h1>
-      
-      <div>
-        {messages.map((msg, index) => (
-          <div key={index}>
-            <strong>{msg.username}</strong>: {msg.message} <em>({formatTimestamp(msg.timestamp)})</em>
-          </div>
-        ))}
-      </div>
-      
-      <div>
-        <input
-          type="text"
-          placeholder="Type your message"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyDown={handleKeyPress}
-        />
-        <button onClick={sendMessage}>Send</button>
-      </div>
-    </div>
+    <Card 
+        border="secondary"
+        bg='Light'
+        text='black'
+    >
+        <Card.Header>Chat room</Card.Header>
+          <Card.Body>
+            {/* <Card.Title> Card Title </Card.Title> */}
+            <Card.Text>
+                {messages.map((msg, index) => (
+                    <div key={index}>
+                        <strong>{msg.username}</strong>: {msg.message} <em>({formatTimestamp(msg.timestamp)})</em>
+                    </div>
+                ))}
+            </Card.Text>
+            <InputGroup className="">
+                <Form.Control
+                    placeholder="Type your message"
+                    aria-label="Message"
+                    aria-describedby="basic-addon2"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    onKeyDown={handleKeyPress}
+                    style={{boxShadow:"none"}}
+                />
+                <Button variant="outline-secondary" id="button-addon2" onClick={sendMessage}>
+                    Send
+                </Button>
+            </InputGroup>
+          </Card.Body>
+    </Card>
   );
 }
