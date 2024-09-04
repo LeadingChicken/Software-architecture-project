@@ -1,6 +1,187 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700;800;900&display=swap");
+
 .board {
-    display: grid;
-    grid-template-columns: repeat(3, 100px);
-    grid-gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 60vh;
+  height: 60vh;
+  margin: 20px 0;
+  justify-content: space-between;
+  background-color: #1e1e1e; /* Thay đổi màu nền nếu cần */
+  border-radius: 15px;
+  backdrop-filter: blur(8px);
+}
+
+.body {
+  display: flex;
+  background: linear-gradient(to bottom right, #212529, #2c2c26);
+  align-items: center;
+  justify-content: space-around;
+  margin: 0;
+  height: 100vh;
+}
+
+.square.X {
+  /* color: red; */
+
+  background: linear-gradient(
+    to right,
+    #72edf2,
+    #5151e5
+  ); /* Gradient từ màu #72edf2 đến #5151e5 */
+  background-clip: text; /* Cắt nền để chỉ hiển thị trên chữ */
+  -webkit-background-clip: text; /* Hỗ trợ cho trình duyệt WebKit */
+  color: transparent; /* Làm cho màu chữ trong suốt để hiển thị gradient */
+  text-shadow: 0 0 2px rgba(114, 237, 242, 0.8),
+    /* Glow màu sáng */ 0 0 4px rgba(114, 237, 242, 0.8),
+    0 0 6px rgba(81, 81, 229, 0.8), 0 0 8px rgba(81, 81, 229, 0.8); /* Glow màu tối hơn */
+}
+
+.square.O {
+  background: linear-gradient(
+    to right,
+    #fdeb71,
+    #f8d800
+  ); /* Gradient từ màu #72edf2 đến #5151e5 */
+  background-clip: text; /* Cắt nền để chỉ hiển thị trên chữ */
+  -webkit-background-clip: text; /* Hỗ trợ cho trình duyệt WebKit */
+  color: transparent; /* Làm cho màu chữ trong suốt để hiển thị gradient */
+  text-shadow: 0 0 2px #fdeb71, /* Glow màu sáng */ 0 0 4px #fdeb71,
+    0 0 6px #f8d800, 0 0 8px #f8d800;
+}
+
+.square {
+  font-family: "Montserrat", sans-serif;
+  width: 33.3%;
+  height: 33.3%;
+  font-size: 72px;
+  font-weight: bolder;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px;
+  border: 0px solid rgba(255, 255, 255, 0.05);
+  border-width: 0 2px 2px 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.square.first_row {
+  border-width: 0 0 0 0;
+}
+
+.square.third_row {
+  border-width: 0 0 0 0;
+}
+.square.first_col {
+  border-bottom-width: 0 0 0 0;
+}
+.square.third_col {
+  border-width: 0 0 0px 0;
+}
+.square.second_row {
+  border-width: 2px 0 2px 0;
+}
+.square.second_col {
+  border-width: 0 2px 0px 2px;
+}
+
+.square.center {
+  border-width: 2px 2px 2px 2px;
+}
+
+.player {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column; /* Cho phép chữ xuống dòng */
+
+  background-color: #1e1e1e;
+  justify-content: start;
+  align-items: center;
+  width: 50vh;
+  height: 70vh;
+  margin: 20px 0;
+  border-radius: 10px;
+  font-size: 72px;
+  font-family: "Montserrat", sans-serif;
+}
+.player.playerOne {
+  font-family: "Montserrat", sans-serif;
+  font-size: 52px;
+  background: linear-gradient(
+    to right,
+    #72edf2,
+    #5151e5
+  ); /* Gradient từ màu #72edf2 đến #5151e5 */
+  background-clip: text; /* Cắt nền để chỉ hiển thị trên chữ */
+  -webkit-background-clip: text; /* Hỗ trợ cho trình duyệt WebKit */
+  color: transparent; /* Làm cho màu chữ trong suốt để hiển thị gradient */
+  text-shadow: 0 0 2px rgba(114, 237, 242, 0.8),
+    /* Glow màu sáng */ 0 0 3px rgba(114, 237, 242, 0.8),
+    0 0 4px rgba(81, 81, 229, 0.8), 0 0 5px rgba(81, 81, 229, 0.8); /* Glow màu tối hơn */
+  margin: 20px 0 100px 0;
+  font-weight: bold;
+  transition: all 0.4s ease;
+}
+.player.playerTwo {
+  font-family: "Montserrat", sans-serif;
+  font-size: 52px;
+  background: linear-gradient(
+    to right,
+    #fdeb71,
+    #f8d800
+  ); /* Gradient từ màu #72edf2 đến #5151e5 */
+  background-clip: text; /* Cắt nền để chỉ hiển thị trên chữ */
+  -webkit-background-clip: text; /* Hỗ trợ cho trình duyệt WebKit */
+  color: transparent; /* Làm cho màu chữ trong suốt để hiển thị gradient */
+  text-shadow: 0 0 2px #fdeb71, 0 0 3px #fdeb71, 0 0 4px #f8d800,
+    0 0 5px #f8d700c8;
+  margin: 20px 0 100px 0;
+  font-weight: bold;
+  transition: all 0.4s ease;
+}
+
+.activePlayer {
+  font-size: 72px; /* Kích thước chữ lớn hơn */
+  font-weight: bold; /* Đậm chữ */
+  transition: all 0.4s ease; /* Hiệu ứng chuyển tiếp mượt mà */
+}
+.waitingPlayer {
+  font-size: 52px; /* Kích thước chữ lớn hơn */
+  font-weight: bold; /* Đậm chữ */
+  transition: all 0.4s ease; /* Hiệu ứng chuyển tiếp mượt mà */
+}
+
+.restartContainer {
+  position: absolute; /* Đặt vị trí cố định */
+  top: 16%; /* Căn giữa theo chiều dọc */
+  left: 38%; /* Căn giữa theo chiều ngang */
+  transform: translate(-50%, -50%); /* Dịch chuyển để căn giữa chính xác */
+  display: grid; /* Sử dụng Grid */
+  place-items: center; /* Căn giữa cả chiều dọc và chiều ngang */
+  z-index: 100; /* Đảm bảo nút ở trên cùng */
+  background-color: #1e1e1e; /* Nền mờ để dễ nhìn */
+  padding: 20px; /* Thêm khoảng cách xung quanh */
+  border-radius: 10px; /* Bo góc */
+  animation: zoomInOut 0.5s ease-in-out forwards; /* Thêm animation */
+  font-size: 4rem; /* Kích thước chữ */
+  text-align: center; /* Căn giữa nội dung bên trong */
+  color: white;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+}
+
+@keyframes zoomInOut {
+  0% {
+    transform: scale(0); /* Bắt đầu với kích thước 0 */
+    opacity: 0; /* Bắt đầu với độ trong suốt 0 */
   }
-  
+  50% {
+    transform: scale(1.5); /* Phóng to lên 120% */
+    opacity: 1; /* Độ trong suốt 1 */
+  }
+  100% {
+    transform: scale(1); /* Quay lại kích thước ban đầu */
+    opacity: 1; /* Độ trong suốt 1 */
+  }
+}
