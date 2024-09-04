@@ -9,7 +9,7 @@ import { useMediaQuery } from 'react-responsive';
 const Header = () => {
     const isMdAndDown = useMediaQuery({ maxWidth: 991 });
     return (
-        <header>
+        <>
             <Navbar bg="dark" variant="dark" expand="lg" className='px-4'>
                 <Navbar.Brand ><Nav.Link as={Link} href="/">Game Hub</Nav.Link></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -23,8 +23,12 @@ const Header = () => {
                         {
                             isMdAndDown && 
                             <>
-                                <Nav.Link as={Link} href="/sign-in">Sign in</Nav.Link>
-                                <Nav.Link as={Link} href="/sign-up">Sign up</Nav.Link>
+                                <Nav.Link as={Link} href="/authenticate/login">
+                                  Sign In
+                                </Nav.Link>
+                                <Nav.Link as={Link} href="/authenticate/signup">
+                                  Sign Up
+                                </Nav.Link>
                             </>
                         }
                         
@@ -38,19 +42,19 @@ const Header = () => {
                             >
                                 <NavDropdown.Item href="/sign-in">Sign in</NavDropdown.Item>
                                 <NavDropdown.Item href="/sign-up">
-                                    Sign up
+                                Sign up
                                 </NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                                {/* <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item href="#action/3.4">
                                     Separated link
-                                </NavDropdown.Item>
+                                </NavDropdown.Item> */}
                             </NavDropdown>
                         </Nav>
                     }
                 </Navbar.Collapse>
             </Navbar>
-        </header>
+        </>
     );
 }
 
