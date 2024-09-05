@@ -1,5 +1,6 @@
-'use client';
+"use client";
 import { useEffect, useState } from "react";
+import styleCaro from "@/styles/BoardCaro.module.css";
 
 const initialState = {
   board: Array(9).fill(null),
@@ -71,47 +72,81 @@ const TicTacToe = () => {
 
   const renderSquare = (index) => {
     return (
-      <button key={index} onClick={() => handleClick(index)} style={squareStyle}>
+      <button
+        key={index}
+        onClick={() => handleClick(index)}
+        className={`${styleCaro.square} ${
+          gameState.board[index] === "X" ? styleCaro.X : ""
+        } ${gameState.board[index] === "O" ? styleCaro.O : ""} ${
+          [0, 1, 2].includes(index) ? styleCaro.first_row : ""
+        } ${[3, 4, 5].includes(index) ? styleCaro.second_row : ""} ${
+          [6, 7, 8].includes(index) ? styleCaro.third_row : ""
+        } ${[0, 3, 6].includes(index) ? styleCaro.first_col : ""} ${
+          [1, 4, 7].includes(index) ? styleCaro.second_col : ""
+        } ${[2, 5, 8].includes(index) ? styleCaro.third_col : ""} ${
+          index === 4 ? styleCaro.center : ""
+        }`}
+      >
         {gameState.board[index]}
       </button>
     );
   };
 
-  const squareStyle = {
-    width: "60px",
-    height: "60px",
-    fontSize: "24px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    margin: "4px",
-    border: "1px solid #000",
-    backgroundColor: "#fff",
-    cursor: "pointer",
-  };
-
-  const boardStyle = {
-    display: "flex",
-    flexWrap: "wrap",
-    width: "204px",
-    margin: "20px auto",
-    justifyContent: "center",
-  };
-
   return (
     <div>
-      <h2>Tic-Tac-Toe</h2>
-      <div style={boardStyle}>
-        {Array.from({ length: 9 }).map((_, index) => renderSquare(index))}
-      </div>
-      {gameState.winner ? (
-        <div>
-          <p>Winner: {gameState.winner}</p>
-          <button onClick={handleRestart}>Restart</button>
+      <div className={`${styleCaro.body} text-center`}>
+        <div className={`${styleCaro.player}`}>
+          <div className={`${styleCaro.player} ${styleCaro.playerOne}`}>
+            <p
+              className={
+                gameState.xIsNext
+                  ? styleCaro.activePlayer
+                  : styleCaro.waitingPlayer
+              }
+            >
+              PLAYER 1
+              <span>
+                <p>X</p>
+              </span>
+            </p>
+          </div>
         </div>
-      ) : (
-        <p>Next Player: {gameState.xIsNext ? "X" : "O"}</p>
-      )}
+        <div className={styleCaro.board}>
+          {Array.from({ length: 9 }).map((_, index) => renderSquare(index))}
+        </div>
+        <div className={`${styleCaro.player}`}>
+          <div className={`${styleCaro.player} ${styleCaro.playerTwo}`}>
+            <p
+              className={
+                !gameState.xIsNext
+                  ? styleCaro.activePlayer
+                  : styleCaro.waitingPlayer
+              }
+            >
+              PLAYER 2
+              <span>
+                <p>O</p>
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div>
+        {gameState.winner ? (
+          <div>
+            <p>Winner: {gameState.winner}</p>
+
+            <button
+              className={styleCaro.restartContainer}
+              onClick={handleRestart}
+            >
+              RESTART
+            </button>
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
     </div>
   );
 };
