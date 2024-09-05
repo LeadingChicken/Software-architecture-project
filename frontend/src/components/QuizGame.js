@@ -1,16 +1,12 @@
 'use client'
 import { useEffect, useState } from "react";
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 
 const initialState = {
   listQuestions: [
-    { question: "What is the capital of France?", answers: ["Paris", "Berlin", "Madrid", "New York"], correctAnswer: "Paris" },
-    { question: "What is 2 + 2?", answers: ["3", "4", "5", "6"], correctAnswer: "4" },
-    { question: "What is 2 + 5?", answers: ["3", "7", "5", "6"], correctAnswer: "7" },
-    { question: "What is 2 + 6?", answers: ["8", "7", "5", "6"], correctAnswer: "8" },
+    { question: "What is the capital of France?", answers: ["Paris", "Berlin", "Madrid"], correctAnswer: "Paris" },
+    { question: "What is 2 + 2?", answers: ["3", "4", "5"], correctAnswer: "4" },
+    { question: "What is 2 + 5?", answers: ["3", "7", "5"], correctAnswer: "7" },
+    { question: "What is 2 + 6?", answers: ["8", "7", "5"], correctAnswer: "8" },
   ],
   currentQuestion: 0,
   score: 0,
@@ -73,56 +69,26 @@ const QuizGame = () => {
         <h2>Game Over</h2>
         <p>Your score: {gameState.score}</p>
         <p>Total Correct Answers: {gameState.totalCorrectAnswer}</p>
-        <Button onClick={handleRestart}>Play Again</Button>
+        <button onClick={handleRestart}>Play Again</button>
       </div>
     );
   }
 
   const currentQuestion = gameState.listQuestions[gameState.currentQuestion];
-  const buttonVariants = ["primary", "success", "warning", "danger"];
   return (
-    <Card 
-        border="secondary"
-        bg='Light'
-        text='black'
-    >
-        <Card.Header className="d-flex justify-content-between">
-            <span>Question {gameState.currentQuestion + 1}</span>  
-            <span>Score: {gameState.score}</span>
-        </Card.Header>
-        <Card.Body>
-        <Card.Title>{currentQuestion.question}</Card.Title>
-            <Row className="h-100">
-                {currentQuestion.answers.map((answer, index) => (
-                    <Col xs={12} lg={6}>
-                        <Button 
-                            key={index} 
-                            onClick={() => handleAnswer(answer)} 
-                            className="w-100 mt-2"
-                            variant={buttonVariants[index % buttonVariants.length]} 
-                        >
-                        {answer}
-                        </Button>
-                    </Col>
-                ))}
-            </Row>
-            <Card.Text className="mt-2">Total Correct Answers: {gameState.totalCorrectAnswer}</Card.Text>
-        </Card.Body>
-        
-    </Card>
-    // <Card>
-    //   <h2>Question {gameState.currentQuestion + 1}</h2>
-    //   <p>{currentQuestion.question}</p>
-    //   <div>
-    //     {currentQuestion.answers.map((answer, index) => (
-    //       <button key={index} onClick={() => handleAnswer(answer)}>
-    //         {answer}
-    //       </button>
-    //     ))}
-    //   </div>
-    //   <p>Score: {gameState.score}</p>
-    //   <p>Total Correct Answers: {gameState.totalCorrectAnswer}</p>
-    // </Card>
+    <div>
+      <h2>Question {gameState.currentQuestion + 1}</h2>
+      <p>{currentQuestion.question}</p>
+      <div>
+        {currentQuestion.answers.map((answer, index) => (
+          <button key={index} onClick={() => handleAnswer(answer)}>
+            {answer}
+          </button>
+        ))}
+      </div>
+      <p>Score: {gameState.score}</p>
+      <p>Total Correct Answers: {gameState.totalCorrectAnswer}</p>
+    </div>
   );
 };
 

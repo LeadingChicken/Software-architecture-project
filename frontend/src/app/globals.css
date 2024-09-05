@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* :root {
+:root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -14,9 +14,9 @@
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
-} */
+}
 
-/* body {
+body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -30,15 +30,4 @@
   .text-balance {
     text-wrap: balance;
   }
-} */
-/* global.css hoặc một file CSS tùy chỉnh khác */
-.custom-scroll::-webkit-scrollbar {
-  width: 0; /* Ẩn thanh cuộn */
-  height: 0; /* Ẩn thanh cuộn ngang nếu có */
 }
-
-.custom-scroll {
-  scrollbar-width: none; /* Ẩn thanh cuộn trên Firefox */
-  -ms-overflow-style: none; /* Ẩn thanh cuộn trên Internet Explorer và Edge */
-}
-
