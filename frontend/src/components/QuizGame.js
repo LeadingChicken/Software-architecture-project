@@ -4,8 +4,9 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-
+import { useMediaQuery } from 'react-responsive';
 const initialState = {
+  
   listQuestions: [
     { question: "What is the capital of France?", answers: ["Paris", "Berlin", "Madrid", "New York"], correctAnswer: "Paris" },
     { question: "What is 2 + 2?", answers: ["3", "4", "5", "6"], correctAnswer: "4" },
@@ -18,6 +19,7 @@ const initialState = {
 };
 
 const QuizGame = () => {
+  const isMdAndDown = useMediaQuery({ maxWidth: 991 });
   const [gameState, setGameState] = useState(initialState);
   const [isGameOver, setIsGameOver] = useState(false);
 

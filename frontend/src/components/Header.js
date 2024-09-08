@@ -40,8 +40,8 @@ const Header = () => {
                                 id="basic-nav-dropdown"
                                 align="end"
                             >
-                                <NavDropdown.Item href="/sign-in">Sign in</NavDropdown.Item>
-                                <NavDropdown.Item href="/sign-up">
+                                <NavDropdown.Item href="/authenticate/login">Sign in</NavDropdown.Item>
+                                <NavDropdown.Item href="/authenticate/signup">
                                 Sign up
                                 </NavDropdown.Item>
                                 {/* <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
