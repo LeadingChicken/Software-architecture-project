@@ -7,6 +7,5 @@ const Board = () => (
     <Caro />
   </div>
 );
-// revert
 
 export default Board;
