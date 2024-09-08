@@ -98,7 +98,7 @@ export default function MemoryGame() {
     setIsGameStarted(false);
     localStorage.removeItem('memoryGameState');
   };
-
+  //update animation
   return (
     <Container className="text-center px-auto">
       <Card
