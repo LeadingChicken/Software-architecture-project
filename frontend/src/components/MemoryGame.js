@@ -100,52 +100,80 @@ export default function MemoryGame() {
   };
 
   return (
-<Container className="text-center px-auto">
-
-  <Card style={{ maxWidth: "400px" }} className='mx-auto my-auto'>
-    <Card.Header>
-      <h1>Memory Game</h1>
-      <p>Moves: {moveCount}</p>
-      <p>Correct Pairs: {matchedCards.length / 2}</p>
-    </Card.Header>
-    <Card.Body>
-      <Row xs={4} className="g-3 mx-auto" >
-        {cards.map((card, index) => (
-          <Col key={index}>
-            <div className="ratio ratio-1x1"> {/* Giữ tỷ lệ 1:1 */}
-              <Card
-                className="h-100"
-                onClick={() => handleCardClick(index)}
-                style={{ cursor: 'pointer' }}
-              >
-                {(flippedCards.includes(index) || matchedCards.includes(index)) ? (
-                  <Card.Img 
-                    variant="top" 
-                    src={card} 
-                    className="h-100" 
-                    style={{ objectFit: 'cover', borderRadius: '0.5rem' }} // Đảm bảo giữ góc tròn
-                  />
-                ) : (
-                  <Card.Img 
-                    variant="top" 
-                    src={questionMark} 
-                    className="h-100" 
-                    style={{ objectFit: 'cover', borderRadius: '0.5rem' }} // Đảm bảo giữ góc tròn
-                  />
-                )}
-              </Card>
-            </div>
-          </Col>
-        ))}
-      </Row>
-      <Button onClick={resetGame} className="mt-3 w-100">
-        <span>Reset Game</span>
-      </Button>
-    </Card.Body>
-  </Card>
-</Container>
-
-
-
+    <Container className="text-center px-auto">
+      <Card
+        style={{ 
+          maxWidth: "500px",
+          backgroundColor: "#f8f9fa",  // Màu nền sáng
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // Bóng
+          borderRadius: "15px" // Bo tròn các góc thẻ chính
+        }}
+        className='mx-auto my-auto border border-0 p-3'
+      >
+        <Card.Header style={{ backgroundColor: "#007bff", color: "white" }}>
+          <h1 style={{ fontFamily: "'Comic Sans MS', cursive" }}>Memory Game</h1>
+          <p>Moves: {moveCount}</p>
+          <p>Correct Pairs: {matchedCards.length / 2}</p>
+        </Card.Header>
+        <Card.Body>
+          <Row xs={4} className="g-3 mx-auto">
+            {cards.map((card, index) => (
+              <Col key={index}>
+                <div className="ratio ratio-1x1">
+                  <Card
+                    className="h-100 border rounded-2"
+                    onClick={() => handleCardClick(index)}
+                    style={{
+                      cursor: 'pointer',
+                      transition: 'transform 0.5s', // Hiệu ứng lật thẻ
+                      transform: flippedCards.includes(index) || matchedCards.includes(index)
+                        ? 'rotateY(180deg)' : 'rotateY(0deg)', // Lật 3D
+                      backgroundColor: flippedCards.includes(index) || matchedCards.includes(index)
+                        ? '#28a745' : '#ffc107' // Thẻ lật sẽ có màu khác
+                    }}
+                  >
+                    {(flippedCards.includes(index) || matchedCards.includes(index)) ? (
+                      <Card.Img
+                        variant="top"
+                        src={card}
+                        className="h-100 border rounded-2"
+                        style={{ 
+                          objectFit: 'cover',
+                          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", // Bóng khi lật
+                        }}
+                      />
+                    ) : (
+                      <Card.Img
+                        variant="top"
+                        src={questionMark}
+                        className="h-100 border rounded-2"
+                        style={{
+                          objectFit: 'cover',
+                          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"
+                        }}
+                      />
+                    )}
+                  </Card>
+                </div>
+              </Col>
+            ))}
+          </Row>
+          <Button
+            onClick={resetGame}
+            className="mt-3 w-100 border rounded"
+            style={{
+              backgroundColor: "#007bff", // Màu nút
+              color: "white",
+              transition: 'background-color 0.3s', // Hiệu ứng nút
+              fontFamily: "'Comic Sans MS', cursive"
+            }}
+            onMouseOver={(e) => e.target.style.backgroundColor = "#0056b3"}
+            onMouseOut={(e) => e.target.style.backgroundColor = "#007bff"}
+          >
+            <span>Reset Game</span>
+          </Button>
+        </Card.Body>
+      </Card>
+    </Container>
   );
 }
