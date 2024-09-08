@@ -6,9 +6,26 @@ class UserReposistory {
     return await newUser.save();
   }
 
-  async findByUserName(userName) {
+  async findUserById(userId) {
+    return await User.findById(userId);
+  }
+
+  async findUserByName(userName) {
     return await User.findOne({ userName });
   }
+
+  async findAllUser() {
+    return await User.find();
+  }
+
+  async updateUser(userId, userData) {
+    return await User.findByIdAndUpdate(userId, userData, { new: true });
+  }
+
+  async deleteUser(userId) {
+    return await User.findByIdAndUpdate(userId);
+  }
+
 }
 
 module.exports = new UserReposistory();
