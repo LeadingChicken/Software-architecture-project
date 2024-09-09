@@ -35,7 +35,7 @@ const Signup = () => {
           phoneNumber: phoneNumber,
         };
 
-        const res = await fetch("http://localhost:5000/api/user/signup", {
+        const res = await fetch("http://localhost:5000/api/users/signup", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

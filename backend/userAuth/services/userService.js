@@ -11,7 +11,7 @@ class UserService {
     if (!user || isAdmin != user.isAdmin) {
       throw new Error("User not found!");
     }
-    const isMatch = bcrypt.compare(password, user.password)
+    const isMatch = bcrypt.compare(password, user.password);
     if (!isMatch) {
       throw new Error("Invalid credentials!");
     }
@@ -35,13 +35,27 @@ class UserService {
     });
   }
 
-  async createUser({ userName, password, email, phoneNumber, fullName, isAdmin }) {
+  async createUser({
+    userName,
+    password,
+    email,
+    phoneNumber,
+    fullName,
+    isAdmin,
+  }) {
     const existingUser = await userRepository.findUserByName(userName);
     if (existingUser) {
       throw new Error("User already exists!");
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-    return await userRepository.createUser({ userName, password: hashedPassword, email, phoneNumber, fullName, isAdmin });
+    return await userRepository.createUser({
+      userName,
+      password: hashedPassword,
+      email,
+      phoneNumber,
+      fullName,
+      isAdmin,
+    });
   }
 
   async findUserById(userId) {
