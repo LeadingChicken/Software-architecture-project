@@ -18,7 +18,6 @@ const SingleUserPage = ({ params }) => {
   const [formData, setFormData] = useState({
     userName: "",
     email: "",
-    password: "",
     phoneNumber: "",
     isAdmin: false,
     fullName: "",
