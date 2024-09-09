@@ -5,7 +5,6 @@ import styles from "@/app/admin/dashboard/ui/dashboard/users/users.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { useUserContext } from "@/app/admin/dashboard/context/UserContext";
 import { useSelector, useDispatch } from "react-redux";
 import { setUsers, setCount, deleteUser } from "@/store/usersSlice";
 
@@ -100,7 +99,7 @@ const UsersPage = ({ searchParams }) => {
         </thead>
         <tbody>
           {users.map((user) => (
-            <tr key={user.id}>
+            <tr key={user._id}>
               <td>
                 <div className={styles.user}>
                   <Image
