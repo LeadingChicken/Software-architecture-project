@@ -3,12 +3,33 @@ const User = require("../models/Users");
 class UserReposistory {
   async createUser(userData) {
     const newUser = new User(userData);
-    return await newUser.save();
+    await newUser.save();
+    const collection = await User.find();
+    return {newUser, collection};
   }
 
-  async findByUserName(userName) {
+  async findUserById(userId) {
+    return await User.findById(userId);
+  }
+
+  async findUserByName(userName) {
     return await User.findOne({ userName });
   }
+
+  async findAllUser() {
+    return await User.find();
+  }
+
+  async updateUser(userId, userData) {
+    return await User.findByIdAndUpdate(userId, userData, { new: true });
+  }
+
+  async deleteUser(userId) {
+    const deletedUser = await User.findByIdAndDelete(userId);
+    const collection = await User.find();
+    return {deletedUser, collection}
+  }
+
 }
 
 module.exports = new UserReposistory();

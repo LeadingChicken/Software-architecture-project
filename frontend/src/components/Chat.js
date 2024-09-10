@@ -1,17 +1,20 @@
 'use client'
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import io from 'socket.io-client';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import ListGroup from 'react-bootstrap/ListGroup'
 import Card from 'react-bootstrap/Card';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 let socket;
 
 export default function Chat() {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
+  const textareaRef = useRef(null);
 
   // Tên người dùng mặc định
   const username = 'user';
@@ -38,35 +41,35 @@ export default function Chat() {
     };
   }, []);
 
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = 'auto'; // Đặt lại chiều cao
+      // Cập nhật chiều cao, nhưng giới hạn tối đa bằng 2 dòng
+      const lineHeight = parseInt(window.getComputedStyle(textarea).lineHeight, 24);
+      const maxHeight = 2 * lineHeight; // Chiều cao tối đa cho 2 dòng
+      textarea.style.height = `${Math.min(textarea.scrollHeight, maxHeight)}px`;
+    }
+  }, [message]);
+
   const sendMessage = () => {
     if (message.trim() === '') {
-      // alert('Please enter a message.');
       return;
     }
 
     const messageData = {
       username,
       message,
-      timestamp: new Date().toISOString() // Thêm thời gian gửi tin nhắn
+      timestamp: new Date().toISOString(), // Thêm thời gian gửi tin nhắn
     };
 
     socket.emit('message', messageData);
     setMessage('');
   };
 
-  const formatTimestamp = (timestamp) => {
-    const date = new Date(timestamp);
-    let hours = date.getHours();
-    const minutes = date.getMinutes();
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12;
-    const strMinutes = minutes < 10 ? '0' + minutes : minutes;
-    return `${hours}:${strMinutes} ${ampm}`;
-  };
-
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault(); // Ngăn chặn việc xuống dòng
       sendMessage();
     }
   };
@@ -78,30 +81,42 @@ export default function Chat() {
         text='black'
     >
         <Card.Header>Chat room</Card.Header>
-          <Card.Body>
-            {/* <Card.Title> Card Title </Card.Title> */}
-            <Card.Text>
-                {messages.map((msg, index) => (
-                    <div key={index}>
-                        <strong>{msg.username}</strong>: {msg.message} <em>({formatTimestamp(msg.timestamp)})</em>
-                    </div>
-                ))}
-            </Card.Text>
-            <InputGroup className="">
+        <Card.Body className="d-flex flex-column">
+          <Card.Text className="overflow-auto" style={{maxHeight:"400px"}}>
+              {messages.map((msg, index) => (
+                  <p key={index} className='mb-2 text-wrap'>
+                      <strong>{msg.username}</strong>: {msg.message}
+                  </p>
+              ))}
+          </Card.Text>
+          <InputGroup className="mt-2">
                 <Form.Control
+                    as="textarea"
                     placeholder="Type your message"
                     aria-label="Message"
                     aria-describedby="basic-addon2"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     onKeyDown={handleKeyPress}
-                    style={{boxShadow:"none"}}
+                    ref={textareaRef}
+                    style={{
+                        boxShadow: "none",
+                        border: "solid grey 1px",
+                        resize: "none",
+                        overflowY: "scroll",
+                        height: "auto",
+                        maxHeight: "100px",
+                        lineHeight: "1.5",
+                    }}
+                    rows={1}
+                    className="text-wrap custom-scroll"
                 />
-                <Button variant="outline-secondary" id="button-addon2" onClick={sendMessage}>
-                    Send
+                <Button variant="outline-danger" id="button-addon2" onClick={sendMessage} style={{ border: "solid grey 1px" }}>
+                <FontAwesomeIcon icon={faPaperPlane} size="md" />
                 </Button>
             </InputGroup>
-          </Card.Body>
+
+        </Card.Body>
     </Card>
   );
 }

@@ -1,19 +1,28 @@
-.game {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* MemoryGame.module.css */
+.flip-card {
+  perspective: 1000px; /* Tạo chiều sâu cho hiệu ứng */
 }
 
-.resetButton {
-  margin-top: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
 }
 
-.winMessage {
-  margin-top: 20px;
-  font-size: 24px;
-  color: green;
-  font-weight: bold;
+.flipped .flip-card-inner {
+  transform: rotateY(180deg); /* Hiệu ứng lật 180 độ */
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* Ẩn mặt sau khi lật */
+}
+
+.flip-card-back {
+  transform: rotateY(180deg); /* Mặt sau lật */
 }
