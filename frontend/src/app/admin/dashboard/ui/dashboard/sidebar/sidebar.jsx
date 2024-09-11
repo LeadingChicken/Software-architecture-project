@@ -62,7 +62,9 @@ const Sidebar = () => {
   const logOut = () => {
     // Xóa token khỏi localStorage
     localStorage.removeItem("token");
-
+    e.preventDefault();
+    localStorage.removeItem("username");
+    localStorage.removeItem("password");
     // Khởi tạo useRouter
 
     // Điều hướng người dùng về trang đăng nhập
