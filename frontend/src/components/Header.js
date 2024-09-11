@@ -7,13 +7,26 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMediaQuery } from "react-responsive";
 import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 const Header = () => {
   const isMdAndDown = useMediaQuery({ maxWidth: 991 });
   const router = useRouter();
+  const currentPath = usePathname();
   const handleLogout = (e) => {
     e.preventDefault();
-    router.push("authenticate/login");
+    localStorage.removeItem("username");
+    localStorage.removeItem("password");
+    router.push("/authenticate/login");
   };
+
+  // Kiểm tra xem đường dẫn hiện tại có phải là trang login không
+  // console.log(`Current Path: ${currentPath}`);
+  if (
+    currentPath === "/authenticate/login" ||
+    currentPath.startsWith("/admin")
+  ) {
+    return null; // Không hiển thị Header nếu đang ở trang login
+  }
   return (
     <>
       <Navbar bg="dark" variant="dark" expand="lg" className="px-4">
@@ -65,7 +78,7 @@ const Header = () => {
                 <NavDropdown.Item href="/authenticate/signup">
                   Sign up
                 </NavDropdown.Item>
-                <NavDropdown.Item href="#" onClick={handleLogout}>
+                <NavDropdown.Item href="" onClick={handleLogout}>
                   Log Out
                 </NavDropdown.Item>
                 {/* <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>

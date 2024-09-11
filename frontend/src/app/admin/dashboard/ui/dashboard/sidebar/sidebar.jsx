@@ -3,6 +3,9 @@ import Image from "next/image";
 import MenuLink from "./menuLink/menuLink";
 import styles from "./sidebar.module.css";
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setCredentials, setUser } from "@/store/userSlice"; // Đường dẫn tới userSlice
 import {
   MdDashboard,
   MdSupervisedUserCircle,
@@ -45,8 +48,17 @@ const menuItems = [
   },
 ];
 
-const Sidebar = async () => {
+const Sidebar = () => {
+  const [user, setUser] = useState({
+    userName: "",
+    isAdmin: false,
+  });
+
   const router = useRouter();
+  // useEffect(() => {
+  //   setUserName(localUserName);
+  // }, []);
+
   const logOut = () => {
     // Xóa token khỏi localStorage
     localStorage.removeItem("token");
@@ -56,6 +68,40 @@ const Sidebar = async () => {
     // Điều hướng người dùng về trang đăng nhập
     router.push("/authenticate/admin/login");
   };
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/users");
+      const data = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+  useEffect(() => {
+    const localUserName = localStorage.getItem("username");
+
+    const getUser = async () => {
+      try {
+        const userData = await fetchUsers();
+        console.log(userData); // Kiểm tra dữ liệu trả về
+
+        setUser(userData.filter((user) => user.userName === localUserName)[0]);
+
+        // console.log(user.userName);
+        // console.log(user.isAdmin);
+
+        if (!isAdmin) {
+          router.push("/authenticate/admin/login");
+        }
+      } catch (error) {
+        console.error({ message: error.message });
+      }
+    };
+
+    getUser(); // Gọi hàm fetch khi component mount
+  }, []); // Chỉ chạy một lần khi component mount
+
   return (
     <div className={styles.container}>
       <div className={styles.user}>
@@ -67,7 +113,7 @@ const Sidebar = async () => {
           height="50"
         />
         <div className={styles.userDetail}>
-          <span className={styles.username}>username</span>
+          <span className={styles.username}>{user.userName}</span>
           <span className={styles.userTitle}>Administrator</span>
         </div>
       </div>

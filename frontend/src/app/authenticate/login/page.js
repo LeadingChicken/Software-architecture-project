@@ -4,9 +4,6 @@ import Login from "@/components/authentication/login";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 
-import AuthLayout from "./layout";
-export const layout = AuthLayout;
-
 const LoginPage = () => (
   <div className={styleLoginPage.container}>
     <div className={styleLoginPage.background}></div>
