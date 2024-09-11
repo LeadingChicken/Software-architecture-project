@@ -50,7 +50,7 @@ const menuItems = [
 
 const Sidebar = () => {
   const [user, setUser] = useState({
-    userName: "",
+    userName: "Not logged in",
     isAdmin: false,
   });
 
@@ -59,7 +59,7 @@ const Sidebar = () => {
   //   setUserName(localUserName);
   // }, []);
 
-  const logOut = () => {
+  const logOut = (e) => {
     // Xóa token khỏi localStorage
     localStorage.removeItem("token");
     e.preventDefault();
@@ -82,6 +82,9 @@ const Sidebar = () => {
   };
   useEffect(() => {
     const localUserName = localStorage.getItem("username");
+    if (!localUserName) {
+      router.push("/authenticate/admin/login");
+    }
 
     const getUser = async () => {
       try {
@@ -115,7 +118,7 @@ const Sidebar = () => {
           height="50"
         />
         <div className={styles.userDetail}>
-          <span className={styles.username}>{user.userName}</span>
+          <span className={styles.username}>{user ? user.userName : ""}</span>
           <span className={styles.userTitle}>Administrator</span>
         </div>
       </div>

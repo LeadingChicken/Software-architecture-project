@@ -41,9 +41,9 @@ const BrandCount = () => {
       <h2 className="mb-3 display-6">
         <b>Brands</b>
       </h2>
+      <p className="mb-3 display-6"> {brands.length}</p>{" "}
       <div className="d-flex justify-content-center display-7">
         <div>
-          <p className="mb-3"> {brands.length}</p>{" "}
           {/* Render số lượng người dùng */}
           <ul className="mb-2">
             {brands.map((brand) => (

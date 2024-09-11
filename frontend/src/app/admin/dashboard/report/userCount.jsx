@@ -43,7 +43,7 @@ const UserCount = () => {
       <h2 className="mb-3 display-6">
         <b>Users</b>
       </h2>
-      <p className="mb-3"> {users.length}</p>{" "}
+      <p className="mb-3 display-6"> {users.length}</p>{" "}
       <div className="d-flex justify-content-center display-7">
         <div>
           {/* Render số lượng người dùng */}

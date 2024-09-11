@@ -8,8 +8,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMediaQuery } from "react-responsive";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 const Header = () => {
   const isMdAndDown = useMediaQuery({ maxWidth: 991 });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
   const currentPath = usePathname();
   const handleLogout = (e) => {
@@ -21,12 +23,18 @@ const Header = () => {
 
   // Kiểm tra xem đường dẫn hiện tại có phải là trang login không
   // console.log(`Current Path: ${currentPath}`);
+
+  useEffect(() => {
+    setIsLoggedIn(localStorage.getItem("username") !== null);
+  }, []);
+
   if (
-    currentPath === "/authenticate/login" ||
+    currentPath.startsWith("/authenticate") ||
     currentPath.startsWith("/admin")
   ) {
     return null; // Không hiển thị Header nếu đang ở trang login
   }
+
   return (
     <>
       <Navbar bg="dark" variant="dark" expand="lg" className="px-4">
@@ -50,18 +58,28 @@ const Header = () => {
             <Nav.Link as={Link} href="/quiz">
               Quiz Game
             </Nav.Link>
-            <Nav.Link as={Link} href="/admin/dashboard">
+            {/* <Nav.Link as={Link} href="/admin/dashboard">
               Dash Board
-            </Nav.Link>
+            </Nav.Link> */}
             {/* <Nav.Link as={Link} href="/chat">Chat</Nav.Link> */}
             {isMdAndDown && (
               <>
-                <Nav.Link as={Link} href="/authenticate/login">
-                  Sign In
-                </Nav.Link>
-                <Nav.Link as={Link} href="/authenticate/signup">
-                  Sign Up
-                </Nav.Link>
+                {/* Chỉ hiển thị Sign In và Sign Up nếu chưa đăng nhập */}
+                {!isLoggedIn && (
+                  <>
+                    <Nav.Link as={Link} href="/authenticate/login">
+                      Sign In
+                    </Nav.Link>
+                    <Nav.Link as={Link} href="/authenticate/signup">
+                      Sign Up
+                    </Nav.Link>
+                  </>
+                )}
+                {isLoggedIn && (
+                  <Nav.Link href="" onClick={handleLogout}>
+                    Log Out
+                  </Nav.Link>
+                )}
               </>
             )}
           </Nav>
@@ -72,15 +90,23 @@ const Header = () => {
                 id="basic-nav-dropdown"
                 align="end"
               >
-                <NavDropdown.Item href="/authenticate/login">
-                  Sign in
-                </NavDropdown.Item>
-                <NavDropdown.Item href="/authenticate/signup">
-                  Sign up
-                </NavDropdown.Item>
-                <NavDropdown.Item href="" onClick={handleLogout}>
-                  Log Out
-                </NavDropdown.Item>
+                {/* Chỉ hiển thị Sign In và Sign Up nếu chưa đăng nhập */}
+                {!isLoggedIn && (
+                  <>
+                    <NavDropdown.Item href="/authenticate/login">
+                      Sign in
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="/authenticate/signup">
+                      Sign up
+                    </NavDropdown.Item>
+                  </>
+                )}
+                {isLoggedIn && (
+                  <NavDropdown.Item href="" onClick={handleLogout}>
+                    Log Out
+                  </NavDropdown.Item>
+                )}
+
                 {/* <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item href="#action/3.4">
