@@ -41,7 +41,7 @@ const menuItems = [
       },
       {
         title: "Games",
-        path: "#",
+        path: "/admin/dashboard/games",
         icon: <MdGames />,
       },
     ],

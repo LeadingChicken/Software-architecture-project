@@ -3,6 +3,8 @@ import userReducer from "@/store/userSlice"; // Đường dẫn tới userSlice
 import usersReducer from "@/store/usersSlice"; // Đường dẫn tới usersSlice
 import brandReducer from "@/store/brandSlice"; // Đường dẫn tới userSlice
 import brandsReducer from "@/store/brandsSlice"; // Đường dẫn tới usersSlice
+import gameReducer from "@/store/gameSlice"; // Đường dẫn tới userSlice
+import gamesReducer from "@/store/gamesSlice"; // Đường dẫn tới usersSlice
 
 const store = configureStore({
   reducer: {
@@ -10,6 +12,8 @@ const store = configureStore({
     users: usersReducer,
     brand: brandReducer,
     brands: brandsReducer,
+    game: gameReducer,
+    games: gamesReducer,
   },
 });
 
