@@ -17,9 +17,11 @@ const campaignSchema = new mongoose.Schema({
   },
   brandId: {
     type: String,
+    required: true
   },
   numVoucher: {
     type: Number,
+    default: 0
   }
 });
 

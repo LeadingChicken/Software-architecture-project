@@ -3,9 +3,7 @@ const User = require("../models/Users");
 class UserReposistory {
   async createUser(userData) {
     const newUser = new User(userData);
-    await newUser.save();
-    const collection = await User.find();
-    return {newUser, collection};
+    return await newUser.save();
   }
 
   async findUserById(userId) {
@@ -25,11 +23,8 @@ class UserReposistory {
   }
 
   async deleteUser(userId) {
-    const deletedUser = await User.findByIdAndDelete(userId);
-    const collection = await User.find();
-    return {deletedUser, collection}
+    return await User.findByIdAndDelete(userId);
   }
-
 }
 
 module.exports = new UserReposistory();

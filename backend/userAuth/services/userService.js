@@ -54,7 +54,7 @@ class UserService {
       email,
       phoneNumber,
       fullName,
-      isAdmin,
+      isAdmin
     });
   }
 
@@ -66,8 +66,17 @@ class UserService {
     return await userRepository.findAllUser();
   }
 
-  async updateUser(userId, userData) {
-    return await userRepository.updateUser(userId, userData);
+  async updateUser(userId, latestUserName, { userName, password, email, phoneNumber, fullName, isAdmin }) {
+    if (latestUserName != userName) {
+      const existingUser = await userRepository.findUserByName(userName);
+      if (existingUser) {
+        throw new Error('User name already exists');
+      }
+    }
+    return await userRepository.updateUser(
+      userId,
+      { userName, password, email, phoneNumber, fullName, isAdmin }
+    );
   }
 
   async deleteUser(userId) {

@@ -1,0 +1,48 @@
+const gameRepository = require('../repositories/gameRepository');
+
+class GameService {
+    async createGame({ gameName, picture, gameType, allowExchanged, description }) {
+        const existingGame = await gameRepository.findGameByName(gameName);
+        if(existingGame) {
+            throw new Error('Game name already exists');
+        }
+        return await gameRepository.createGame({ 
+            gameName, 
+            picture,
+            gameType, 
+            allowExchanged, 
+            description 
+        })
+    }
+
+    async findGameById(gameId) {
+        return await gameRepository.findGameById(gameId);
+    }
+
+    async findGameByName(gameName) {
+        return await gameRepository.findGameById(gameName);
+    }
+
+    async findAllGame() {
+        return await gameRepository.findAllGame();
+    }
+
+    async updateGame(gameId, latestGameName, { gameName, picture, gameType, allowExchanged, description }) {
+        if(latestGameName != gameName) {
+            const existingGame = await gameRepository.findGameByName(gameName);
+            if(existingGame) {
+                throw new Error('Game name already exist');
+            }
+        }
+        return await gameRepository.updateGame(
+            gameId, 
+            { gameName, picture, gameType, allowExchanged, description }
+        )
+    }
+
+    async deleteGame(gameId) {
+        return await gameRepository.deleteGame(gameId);
+    }
+}
+
+module.exports = new GameService();
