@@ -46,7 +46,7 @@ class CampaignService {
         const campaigns = await campaignRepository.findCampaignByBrandId(brandId);
         const deletedCampaigns = await Promise.all(
             campaigns.map(async (campaign) => {
-                return await campaignRepository.deleteCampaign(campaign._id);
+                return await this.deleteCampaign(campaign._id);
             }));
         return deletedCampaigns;
     }
@@ -82,11 +82,10 @@ class CampaignService {
     }
 
     async deleteCampaign(campaignId) {
-        const campaign = campaignRepository.findCampaignById(campaignId);
-        if(!campaign) {
-            throw new Error('Campaign ID not found');
-        }
-        return await campaignRepository.deleteCampaign(campaignId);
+        const voucherService = require('../services/voucherService');
+        const campaignVoucher = await voucherService.deleteVoucherByCampaignId(campaignId);
+        const deletedCampaign = await campaignRepository.deleteCampaign(campaignId)
+        return { deletedCampaign, campaignVoucher };
     }
 }
 

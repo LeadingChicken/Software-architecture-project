@@ -59,10 +59,11 @@ class CampaignController {
 
     async deleteCampaign(req, res) {
         try {
-            const deletedCampaign = await campaignService.deleteCampaign(req.params.id);
-            if (!deletedCampaign) {
-                return res.status(404).json({ message: 'Brand not found' });
+            const campaign = await campaignService.findCampaignById(req.params.id);
+            if (!campaign) {
+                return res.status(404).json({ message: 'Campain not found' });
             }
+            const deletedCampaign = await campaignService.deleteCampaign(req.params.id);
             const collection = await campaignService.findAllCampaign();
             res
                 .status(200)

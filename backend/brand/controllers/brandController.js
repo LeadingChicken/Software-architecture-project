@@ -59,19 +59,17 @@ class BrandController {
 
   async deleteBrand(req, res) {
     try {
-      const deletedBrand = await brandService.deleteBrand(req.params.id);
-      if (!deletedBrand) {
+      const brand = await brandService.findBrandById(req.params.id);
+      if (!brand) {
         return res.status(404).json({ message: "Brand not found" });
       }
-      const campaignService = require("../services/campaignService");
-      const brandCampaign = await campaignService.deleteCampaignByBrandId(req.params.id);
+      const deletedBrand = await brandService.deleteBrand(req.params.id);
       const collection = await brandService.findAllBrand();
       res
         .status(200)
         .json({
           message: "Brand deleted successfully",
           deletedBrand,
-          brandCampaign,
           collection
         });
     } catch (error) {
