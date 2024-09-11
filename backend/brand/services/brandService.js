@@ -37,10 +37,7 @@ class BrandService {
     }
 
     async deleteBrand(brandId) {
-        const campaignService = require("../services/campaignService");
-        const brandCampaign = await campaignService.deleteCampaignByBrandId(brandId);
-        const deletedBrand = await brandRepository.deleteBrand(brandId);
-        return {deletedBrand, brandCampaign};
+        return await brandRepository.deleteBrand(brandId);
     }
 }
 

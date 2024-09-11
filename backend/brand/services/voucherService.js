@@ -42,15 +42,6 @@ class VoucherService {
     async deleteVoucher(voucherId) {
         return await voucherRepository.deleteVoucher(voucherId);
     }
-
-    async deleteVoucherByCampaignId(campaignId) {
-        const vouchers = await voucherRepository.findVoucherByCampaignId(campaignId);
-        const deletedVouchers = await Promise.all(
-            vouchers.map(async (Voucher) => {
-                return await voucherRepository.deleteVoucher(Voucher.id);
-            }));
-        return deletedVouchers;
-    }
 }
 
 module.exports = new VoucherService();

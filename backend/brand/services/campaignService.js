@@ -24,7 +24,7 @@ class CampaignService {
         ) {
             throw new Error('Number of voucher must be an interger');
         }
-        return await campaignRepository.creatCampaign({ 
+        return await campaignRepository.createCampaign({ 
             campaignName,
             picture,
             startTime, 
@@ -40,15 +40,6 @@ class CampaignService {
 
     async findAllCampaign() {
         return await campaignRepository.findAllCampaign();
-    }
-
-    async deleteCampaignByBrandId(brandId) {
-        const campaigns = await campaignRepository.findCampaignByBrandId(brandId);
-        const deletedCampaigns = await Promise.all(
-            campaigns.map(async (campaign) => {
-                return await this.deleteCampaign(campaign._id);
-            }));
-        return deletedCampaigns;
     }
 
     async updateCampaign(campaignId, latestCampaignName, { campaignName, picture, startTime, endTime, brandId, numVoucher }) {
@@ -79,13 +70,6 @@ class CampaignService {
         return await campaignRepository.updateCampaign(
             campaignId, 
             { campaignName, picture, startTime, endTime, brandId, numVoucher });
-    }
-
-    async deleteCampaign(campaignId) {
-        const voucherService = require('../services/voucherService');
-        const campaignVoucher = await voucherService.deleteVoucherByCampaignId(campaignId);
-        const deletedCampaign = await campaignRepository.deleteCampaign(campaignId)
-        return { deletedCampaign, campaignVoucher };
     }
 }
 

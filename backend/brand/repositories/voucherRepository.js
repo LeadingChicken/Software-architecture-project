@@ -10,10 +10,6 @@ class VoucherRepository {
         return await Voucher.findById(voucherId);
     }
 
-    async findVoucherByCampaignId(campaignId) {
-        return await Voucher.find({ campaignId });
-    }
-
     async findAllVoucher() {
         return await Voucher.find();
     }

@@ -14,7 +14,6 @@ router.post('/campaigns', campaignController.createCampaign);
 router.get('/campaigns/:id', campaignController.findCampaignById);
 router.get('/campaigns', campaignController.findAllCampaign);
 router.put('/campaigns/:id', campaignController.updateCampaign);
-router.delete('/campaigns/:id', campaignController.deleteCampaign);
 
 router.post('/vouchers', voucherController.createVoucher);
 router.get('/vouchers/:id', voucherController.findVoucherById);
