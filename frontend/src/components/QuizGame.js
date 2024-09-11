@@ -1,38 +1,51 @@
-'use client'
+"use client";
 import { useEffect, useState } from "react";
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { useMediaQuery } from 'react-responsive';
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import { useMediaQuery } from "react-responsive";
+import { Modal } from "react-bootstrap";
+
+import styles from "@/styles/QuizGame.module.css";
 
 const initialState = {
   listQuestions: [
-    { 
-      question: "What is the capital city of Australia?", 
-      answers: ["Sydney", "Canberra", "Brisbane", "Melbourne"], 
-      correctAnswer: "Canberra" 
+    {
+      question: "What is the capital city of Australia?",
+      answers: ["Sydney", "Canberra", "Brisbane", "Melbourne"],
+      correctAnswer: "Canberra",
     },
-    { 
-      question: "Which planet is known as the Red Planet?", 
-      answers: ["Venus", "Mars", "Jupiter", "Saturn"], 
-      correctAnswer: "Mars" 
+    {
+      question: "Which planet is known as the Red Planet?",
+      answers: ["Venus", "Mars", "Jupiter", "Saturn"],
+      correctAnswer: "Mars",
     },
-    { 
-      question: "Who wrote the play 'Romeo and Juliet'?", 
-      answers: ["Charles Dickens", "Mark Twain", "William Shakespeare", "Jane Austen"], 
-      correctAnswer: "William Shakespeare" 
+    {
+      question: "Who wrote the play 'Romeo and Juliet'?",
+      answers: [
+        "Charles Dickens",
+        "Mark Twain",
+        "William Shakespeare",
+        "Jane Austen",
+      ],
+      correctAnswer: "William Shakespeare",
     },
-    { 
-      question: "What is the largest ocean on Earth?", 
-      answers: ["Atlantic Ocean", "Arctic Ocean", "Indian Ocean", "Pacific Ocean"], 
-      correctAnswer: "Pacific Ocean" 
+    {
+      question: "What is the largest ocean on Earth?",
+      answers: [
+        "Atlantic Ocean",
+        "Arctic Ocean",
+        "Indian Ocean",
+        "Pacific Ocean",
+      ],
+      correctAnswer: "Pacific Ocean",
     },
-    { 
-      question: "What is the boiling point of water at sea level?", 
-      answers: ["100°C", "80°C", "90°C", "110°C"], 
-      correctAnswer: "100°C" 
-    }
+    {
+      question: "What is the boiling point of water at sea level?",
+      answers: ["100°C", "80°C", "90°C", "110°C"],
+      correctAnswer: "100°C",
+    },
   ],
   currentQuestion: 0,
   score: 0,
@@ -64,25 +77,31 @@ const QuizGame = () => {
   }, [gameState, isGameOver]);
 
   useEffect(() => {
-      if (!isGameOver) {
-          // Hủy bỏ tất cả các giọng đọc hiện tại trước khi bắt đầu đọc câu hỏi mới
-          window.speechSynthesis.cancel();
-          speakQuestion(gameState.listQuestions[gameState.currentQuestion].question);
-      }
+    if (!isGameOver) {
+      // Hủy bỏ tất cả các giọng đọc hiện tại trước khi bắt đầu đọc câu hỏi mới
+      window.speechSynthesis.cancel();
+      speakQuestion(
+        gameState.listQuestions[gameState.currentQuestion].question
+      );
+    }
   }, [gameState.currentQuestion, isGameOver]);
 
   const speakQuestion = (text) => {
-      // Tạo một Utterance mới để đọc câu hỏi
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'en-US'; // Đặt ngôn ngữ của TTS
-      // Chỉ bắt đầu đọc nếu không có giọng đọc nào đang hoạt động
-      window.speechSynthesis.speak(utterance);
+    // Tạo một Utterance mới để đọc câu hỏi
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-US"; // Đặt ngôn ngữ của TTS
+    // Chỉ bắt đầu đọc nếu không có giọng đọc nào đang hoạt động
+    window.speechSynthesis.speak(utterance);
   };
 
   const handleAnswer = (answer) => {
-    const isCorrect = answer === gameState.listQuestions[gameState.currentQuestion].correctAnswer;
+    const isCorrect =
+      answer ===
+      gameState.listQuestions[gameState.currentQuestion].correctAnswer;
     const newScore = isCorrect ? gameState.score + 1 : gameState.score;
-    const newTotalCorrectAnswer = isCorrect ? gameState.totalCorrectAnswer + 1 : gameState.totalCorrectAnswer;
+    const newTotalCorrectAnswer = isCorrect
+      ? gameState.totalCorrectAnswer + 1
+      : gameState.totalCorrectAnswer;
     const nextQuestion = gameState.currentQuestion + 1;
 
     if (nextQuestion < gameState.listQuestions.length) {
@@ -111,12 +130,25 @@ const QuizGame = () => {
 
   if (isGameOver) {
     return (
-      <div>
-        <h2>Game Over</h2>
-        <p>Your score: {gameState.score}</p>
-        <p>Total Correct Answers: {gameState.totalCorrectAnswer}</p>
-        <Button onClick={handleRestart}>Play Again</Button>
-      </div>
+      <Modal
+        className={`${styles.modal_content}`}
+        show={isGameOver}
+        onHide={handleRestart}
+        centered
+      >
+        <Modal.Header>
+          <Modal.Title className="w-100 text-center">Game Over</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="text-center">
+          <p>Your score: {gameState.score}</p>
+          <p>Total Correct Answers: {gameState.totalCorrectAnswer}</p>
+        </Modal.Body>
+        <Modal.Footer className="justify-content-center">
+          <Button variant="secondary" onClick={handleRestart}>
+            Play Again
+          </Button>
+        </Modal.Footer>
+      </Modal>
     );
   }
 
@@ -124,20 +156,26 @@ const QuizGame = () => {
   const buttonVariants = ["primary", "success", "warning", "danger"];
 
   return (
-    <Card border="secondary" bg='Light' text='black'>
-      <Card.Header className="d-flex justify-content-between">
+    <Card bg="Light" text="black">
+      <Card.Header
+        className="d-flex justify-content-between"
+        style={{
+          backgroundColor: "#1e1e1e",
+          color: "white",
+        }}
+      >
         <span>Question {gameState.currentQuestion + 1}</span>
         <span>Score: {gameState.score}</span>
       </Card.Header>
       <Card.Body>
         <Card.Title>{currentQuestion.question}</Card.Title>
         <Card.Title>
-          <video 
-            src="/make-an-anime-avatar-for-you-using-ai_animation.mp4" 
-            autoPlay 
-            loop 
-            muted 
-            style={{ width: '100%', height: '282px' }}
+          <video
+            src="/make-an-anime-avatar-for-you-using-ai_animation.mp4"
+            autoPlay
+            loop
+            muted
+            style={{ width: "100%", height: "282px" }}
           />
         </Card.Title>
         <Row className="h-100">
@@ -153,7 +191,9 @@ const QuizGame = () => {
             </Col>
           ))}
         </Row>
-        <Card.Text className="mt-2">Total Correct Answers: {gameState.totalCorrectAnswer}</Card.Text>
+        <Card.Text className="mt-2">
+          Total Correct Answers: {gameState.totalCorrectAnswer}
+        </Card.Text>
       </Card.Body>
     </Card>
   );
