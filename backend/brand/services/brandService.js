@@ -3,10 +3,16 @@ const brandRepository = require('../repositories/brandRepository')
 class BrandService {
     async createBrand({ brandName, field, location, gps, status }) {
         const existingBrand = await brandRepository.findBrandByName(brandName);
-        if(existingBrand) {
-            throw new Error('Brand name already exists!');
+        if (existingBrand) {
+            throw new Error('Brand name already exists');
         }
-        return await brandRepository.createBrand({ brandName, field, location, gps, status })
+        return await brandRepository.createBrand({
+            brandName,
+            field,
+            location,
+            gps,
+            status
+        });
     }
 
     async findBrandById(brandId) {
@@ -17,8 +23,17 @@ class BrandService {
         return await brandRepository.findAllBrand();
     }
 
-    async updateBrand(brandId, brandData) {
-        return await brandRepository.updateBrand(brandId, brandData);
+    async updateBrand(brandId, latestBrandName, { brandName, field, location, gps, status }) {
+        if (brandName != latestBrandName) {
+            const existingBrand = await brandRepository.findBrandByName(brandName);
+            if (existingBrand) {
+                throw new Error('Brand name already exists');
+            }
+        }
+        return await brandRepository.updateBrand(
+            brandId,
+            { brandName, field, location, gps, status }
+        );
     }
 
     async deleteBrand(brandId) {

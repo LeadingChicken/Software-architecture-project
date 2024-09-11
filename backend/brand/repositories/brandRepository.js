@@ -19,7 +19,11 @@ class BrandRepository {
     }
 
     async updateBrand(brandId, brandData) {
-        return await Brand.findByIdAndUpdate(brandId, brandData, { new: true });
+        return await Brand.findByIdAndUpdate(
+            brandId, 
+            brandData, 
+            { new: true }
+        );
     }
 
     async deleteBrand(brandId) {

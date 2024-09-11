@@ -23,7 +23,11 @@ class CampaignRepository {
     }
 
     async updateCampaign(campaignId, campaignData) {
-        return await Campaign.findByIdAndUpdate(campaignId, campaignData, { new: true });
+        return await Campaign.findByIdAndUpdate(
+            campaignId, 
+            campaignData, 
+            { new: true }
+        );
     }
 
     async deleteCampaign(campaignId) {
