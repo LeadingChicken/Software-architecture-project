@@ -1,6 +1,8 @@
+"use client";
 import Image from "next/image";
 import MenuLink from "./menuLink/menuLink";
 import styles from "./sidebar.module.css";
+import { useRouter } from "next/navigation";
 import {
   MdDashboard,
   MdSupervisedUserCircle,
@@ -44,6 +46,16 @@ const menuItems = [
 ];
 
 const Sidebar = async () => {
+  const router = useRouter();
+  const logOut = () => {
+    // Xóa token khỏi localStorage
+    localStorage.removeItem("token");
+
+    // Khởi tạo useRouter
+
+    // Điều hướng người dùng về trang đăng nhập
+    router.push("/authenticate/admin/login");
+  };
   return (
     <div className={styles.container}>
       <div className={styles.user}>
@@ -69,17 +81,10 @@ const Sidebar = async () => {
           </li>
         ))}
       </ul>
-      <form
-        action={async () => {
-          "use server";
-          await signOut();
-        }}
-      >
-        <button className={styles.logout}>
-          <MdLogout />
-          Logout
-        </button>
-      </form>
+      <button onClick={logOut} className={styles.logout}>
+        <MdLogout />
+        Logout
+      </button>
     </div>
   );
 };

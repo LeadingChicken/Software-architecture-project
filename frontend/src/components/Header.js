@@ -6,8 +6,14 @@ import Container from "react-bootstrap/Container";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMediaQuery } from "react-responsive";
+import { useRouter } from "next/navigation";
 const Header = () => {
   const isMdAndDown = useMediaQuery({ maxWidth: 991 });
+  const router = useRouter();
+  const handleLogout = (e) => {
+    e.preventDefault();
+    router.push("authenticate/login");
+  };
   return (
     <>
       <Navbar bg="dark" variant="dark" expand="lg" className="px-4">
@@ -58,6 +64,9 @@ const Header = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Item href="/authenticate/signup">
                   Sign up
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#" onClick={handleLogout}>
+                  Log Out
                 </NavDropdown.Item>
                 {/* <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                                 <NavDropdown.Divider />

@@ -12,6 +12,7 @@ const userSlice = createSlice({
     fullName: "",
     phoneNumber: "",
     rememberMe: false,
+    token: "",
   },
   reducers: {
     setCredentials: (state, action) => {

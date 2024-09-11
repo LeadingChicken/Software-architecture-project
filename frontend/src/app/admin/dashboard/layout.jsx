@@ -4,9 +4,8 @@ import styles from "./ui/dashboard/dashboard.module.css";
 import "./ui/globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { UserProvider } from "./context/UserContext";
 
-const Layout = ({ children }) => {
+const DashboardLayout = ({ children }) => {
   return (
     <div className={styles.container}>
       <div className={styles.menu}>
@@ -14,11 +13,11 @@ const Layout = ({ children }) => {
       </div>
       <div className={styles.content}>
         <Navbar />
-        <UserProvider>{children}</UserProvider>
+        {children}
       </div>
       <ToastContainer />
     </div>
   );
 };
 
-export default Layout;
+export default DashboardLayout;
